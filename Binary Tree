@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct TreeNode {
+    int data;
+    struct TreeNode* left;
+    struct TreeNode* right;
+};
+struct TreeNode* createNode(int data) {
+    struct TreeNode* newNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+struct TreeNode* insertLeftSkewed(struct TreeNode* root, int data) {
+    if (root == NULL) {
+        return createNode(data);
+    }
+    root->left = insertLeftSkewed(root->left, data);
+    return root;
+}
+void inOrderTraversal(struct TreeNode* root) {
+    if (root != NULL) {
+        inOrderTraversal(root->left);
+        printf("%d ", root->data);
+        inOrderTraversal(root->right);
+    }
+}
+
+int main() {
+ struct TreeNode* root = NULL;
+    root = insertLeftSkewed(root, 1);
+    insertLeftSkewed(root, 2);
+    insertLeftSkewed(root, 3);
+    insertLeftSkewed(root, 4);
+    insertLeftSkewed(root, 5);
+
+    printf("In-order traversal of the left-skewed binary tree: ");
+    inOrderTraversal(root);
+    printf("\n");
+
+    return 0;
+}
